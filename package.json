@@ -5,9 +5,9 @@
   "type": "module",
   "license": "MIT",
   "author": {
-    "name": "Yassine Fathi",
-    "url": "https://fathi.me",
-    "email": "yassine@fathi.me"
+    "name": "Aaron",
+    "url": "https://aaron.portfolio",
+    "email": "aaron@portfolio.dev"
   },
   "funding": {
     "type": "Paypal",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/m4tt72/terminal"
+    "url": "https://github.com/aaron/terminal-portfolio"
   },
   "scripts": {
     "dev": "vite",

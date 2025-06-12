@@ -42,7 +42,16 @@
         const output = await commandFunction(args);
 
         if (commandName !== 'clear') {
-          $history = [...$history, { command, outputs: [output] }];
+          // Check if this is the fastfetch command and handle HTML output
+          if (commandName === 'fastfetch' && typeof output === 'object' && output.html) {
+            $history = [...$history, { 
+              command, 
+              outputs: [''], // Add blank line before fastfetch output
+              htmlOutputs: [output.html] 
+            }];
+          } else {
+            $history = [...$history, { command, outputs: [output as string] }];
+          }
         }
       } else {
         const output = `${commandName}: command not found`;
