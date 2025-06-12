@@ -1,0 +1,9 @@
+name = "terminal-web"
+compatibility_date = "2025-01-01"
+
+[assets]
+directory = "./dist"
+not_found_handling = "single-page-application"
+
+# Optional: Enable preview URLs (enabled by default)
+# workers_dev = true
