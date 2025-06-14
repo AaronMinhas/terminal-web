@@ -7,8 +7,29 @@ const hostname = window.location.hostname;
 
 type CommandOutput = string | { text?: string; html: string };
 
+const commandDescriptions: Record<string, { desc: string; color: string }> = {
+  help: { desc: 'Show this help message.', color: '#d946ef' },
+  hostname: { desc: 'Show the current hostname.', color: '#38bdf8' },
+  whoami: { desc: 'Show the current user.', color: '#a3e635' },
+  date: { desc: 'Show the current date and time.', color: '#facc15' },
+  echo: { desc: 'Print text to the terminal.', color: '#f472b6' },
+  sudo: { desc: 'Rick Roll!', color: '#f87171' },
+  fastfetch: { desc: 'Show portfolio info in a fancy way.', color: '#34d399' },
+  clear: { desc: 'Clear the terminal.', color: '#fbbf24' },
+  banner: { desc: 'Display the banner.', color: '#60a5fa' },
+};
+
 export const commands: Record<string, (args: string[]) => Promise<CommandOutput> | CommandOutput> = {
-  help: () => 'Available commands: ' + Object.keys(commands).join(', '),
+  help: () => {
+    let html = `<div style="font-family: 'JetBrains Mono', monospace;">`;
+    html += `<div style="margin-bottom: 8px;">Available commands:</div>`;
+    html += `<div style=\"margin-left: 2em;\">`;
+    Object.keys(commands).forEach(cmd => {
+      const info = commandDescriptions[cmd];
+      html += `<div style="margin-bottom: 2px;"><span style="color: ${info?.color || '#fff'}; font-weight: 600; min-width: 90px; display: inline-block;">'${cmd}'</span><span style="color: #A0A0A0; margin-left: 8px;">${info?.desc || ''}</span></div>`;
+    });
+    return { html };
+  },
   hostname: () => hostname,
   whoami: () => 'guest',
   date: () => new Date().toLocaleString(),
@@ -82,50 +103,50 @@ export const commands: Record<string, (args: string[]) => Promise<CommandOutput>
       `
     };
   },
-  theme: (args: string[]) => {
-    const usage = `Usage: theme [args].
-    [args]:
-      ls: list all available themes
-      set: set theme to [theme]
+  // theme: (args: string[]) => {
+  //   const usage = `Usage: theme [args].
+  //   [args]:
+  //     ls: list all available themes
+  //     set: set theme to [theme]
 
-    [Examples]:
-      theme ls
-      theme set gruvboxdark
-    `;
-    if (args.length === 0) {
-      return usage;
-    }
+  //   [Examples]:
+  //     theme ls
+  //     theme set gruvboxdark
+  //   `;
+  //   if (args.length === 0) {
+  //     return usage;
+  //   }
 
-    switch (args[0]) {
-      case 'ls': {
-        let result = themes.map((t) => t.name.toLowerCase()).join(', ');
-        result += `You can preview all these themes here: ${packageJson.repository.url}/tree/master/docs/themes`;
+  //   switch (args[0]) {
+  //     case 'ls': {
+  //       let result = themes.map((t) => t.name.toLowerCase()).join(', ');
+  //       result += `You can preview all these themes here: ${packageJson.repository.url}/tree/master/docs/themes`;
 
-        return result;
-      }
+  //       return result;
+  //     }
 
-      case 'set': {
-        if (args.length !== 2) {
-          return usage;
-        }
+  //     case 'set': {
+  //       if (args.length !== 2) {
+  //         return usage;
+  //       }
 
-        const selectedTheme = args[1];
-        const t = themes.find((t) => t.name.toLowerCase() === selectedTheme);
+  //       const selectedTheme = args[1];
+  //       const t = themes.find((t) => t.name.toLowerCase() === selectedTheme);
 
-        if (!t) {
-          return `Theme '${selectedTheme}' not found. Try 'theme ls' to see all available themes.`;
-        }
+  //       if (!t) {
+  //         return `Theme '${selectedTheme}' not found. Try 'theme ls' to see all available themes.`;
+  //       }
 
-        theme.set(t);
+  //       theme.set(t);
 
-        return `Theme set to ${selectedTheme}`;
-      }
+  //       return `Theme set to ${selectedTheme}`;
+  //     }
 
-      default: {
-        return usage;
-      }
-    }
-  },
+  //     default: {
+  //       return usage;
+  //     }
+  //   }
+  // },
   // repo: () => {
   //   window.open(packageJson.repository.url, '_blank');
 
