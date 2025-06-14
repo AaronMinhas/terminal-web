@@ -1,11 +1,12 @@
 name: Build and Deploy to Cloudflare Workers
 
+# TODO: Add conditional deployment for PR previews
+# - Deploy to production only on main branch push
+# - Deploy to preview URLs for pull requests
+# - Add environment-specific configurations
+
 on:
   push:
-    branches:
-      - main
-      - master
-  pull_request:
     branches:
       - main
       - master
